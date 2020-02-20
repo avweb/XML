@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+                <xs:element name="info">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="num" type="t_num"/>
+                            <xs:choice>
+                                <xs:sequence>
+                                    <xs:element name="delete" type="t_delete"/>
+                                    <xs:choice>
+                                        <xs:element name="card" type="t_card"/>
+                                        <xs:sequence>
+                                            <xs:element name="title_part" type="t_title"/>
+                                            <xs:choice>
+                                                <xs:element name="history_title_part" type="t_title" minOccurs="0"/>
+                                                <xs:element name="card" type="t_card" minOccurs="0"/>
+                                            </xs:choice>
+                                        </xs:sequence>
+                                    </xs:choice>
+                                </xs:sequence>
+                                <xs:sequence>
+                                    <xs:element name="title_part" type="t_title"/>
+                                    <xs:choice>
+                                        <xs:element name="history_title_part" type="t_title"/>
+                                        <xs:element name="card" type="t_card"/>
+                                    </xs:choice>
+                                </xs:sequence>
+                            </xs:choice>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+    <xs:simpleType name="t_delete">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="t_version">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="1.0"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="t_num">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="50"/>
+            <xs:pattern value="[A-Z0-9]*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="t_hex">
+        <xs:restriction base="xs:string">
+            <xs:length value="64"/>
+            <xs:pattern value="[A-F0-9]*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="t_title">
+        <xs:sequence>
+            <xs:element name="lastname" type="t_hex"/>
+            <xs:element name="firstname" type="t_hex"/>
+            <xs:element minOccurs="0" name="middlename" type="t_hex"/>
+            <xs:element name="birthday" type="t_hex"/>
+            <xs:element name="docno" type="t_hex"/>
+            <xs:element name="docreg" type="t_hex"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="t_card">
+        <xs:sequence>
+            <xs:element name="pan" type="t_hex"/>
+            <xs:element minOccurs="0" name="parent_pan" type="t_hex"/>
+            <xs:element name="date_issue" type="xs:date"/>
+            <xs:element name="date_expire" type="t_hex"/>
+            <xs:element name="id_card_type" type="t_card_type"/>
+            <xs:element name="funding_source" type="t_funding_source"/>
+            <xs:element name="id_payment_system" type="t_payment_system"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="t_card_type">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="1"/>
+            <xs:enumeration value="2"/>
+            <xs:enumeration value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="t_funding_source">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="DT"/>
+            <xs:enumeration value="CT"/>
+            <xs:enumeration value="PP"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="t_payment_system">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="1"/>
+            <xs:enumeration value="2"/>
+            <xs:enumeration value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
